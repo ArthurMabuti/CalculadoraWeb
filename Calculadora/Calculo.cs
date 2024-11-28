@@ -38,4 +38,11 @@ internal class Calculo(double total, double novoNumero, string operacao)
             _ => throw new ArgumentException("Operação inválida")
         };
     }
+
+    public void ZerarResultado()
+    {
+        Total = 0;
+        PrimeiraOperacao = true;
+        Console.WriteLine("Resultados Zerados");
+    }
 }

@@ -14,7 +14,7 @@ while (true)
         SolicitarOperacao(calculo);
         if (calculo.Operacao!.ToUpper().Equals("C"))
         {
-            ZerarResultado(calculo);
+            calculo.ZerarResultado();
             break;
         }
         SolicitarNumero(calculo);
@@ -44,9 +44,3 @@ static void DemonstrarResultados(Calculo calculo)
     Console.WriteLine($"Total: {calculo.Total}");
 }
 
-static void ZerarResultado(Calculo calculo)
-{
-    calculo.Total = 0;
-    calculo.PrimeiraOperacao = true;
-    Console.WriteLine("Resultados Zerados");
-}

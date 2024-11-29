@@ -88,6 +88,12 @@
     {
         Visor = string.Empty;
     }
+
+    private void RetornarResultado()
+    {
+        Visor = Calculator.Evaluate(Visor!).ToString();
+    }
+
     private string GetBackgroundColor(char item)
     {
         if (SpecialCharacters.Contains(item))

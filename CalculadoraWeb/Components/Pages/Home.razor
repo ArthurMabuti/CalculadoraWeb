@@ -88,5 +88,12 @@
     {
         Visor = string.Empty;
     }
+    private string GetBackgroundColor(char item)
+    {
+        if (SpecialCharacters.Contains(item))
+        {
+            return ChangeColor ? Colors.Pink.Lighten1.ToString() : Theme.PaletteLight.Warning.ToString();
+        }
+        return "inherit"; // Sempre deve retornar uma cor válida
     }
 }

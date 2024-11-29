@@ -4,8 +4,8 @@
 
 <MudMainContent Class="flex-auto">
     <MudStack AlignItems="AlignItems.Center">
-        <MudPaper Height="400px" Width="295px" Elevation="4" Style="@($"background:{Colors.Pink.Accent1}")">
-            <MudTextField @bind-Value="Visor" Class="align-text-right" Variant="Variant.Filled" Disabled="true" Placeholder="0" />
+        <MudPaper Height="400px" Width="295px" Elevation="4" Style="@($"background: {(ChangeColor ? Colors.Pink.Accent1 : "inherit")}")">
+            <MudTextField @bind-Value="Visor" Variant="Variant.Filled" Disabled="true" Placeholder="0" />
             <MudGrid Class="pa-3" Spacing="1">
                 @foreach (char item in Combination)
                 {
@@ -21,6 +21,8 @@
                         }
             </MudGrid>
         </MudPaper>
+        <MudToggleIconButton @bind-Toggled="ChangeColor" Icon="@Icons.Material.Filled.Contrast" Color="@Color.Dark" ToggledColor="@Color.Primary" />
+        <span>@(ChangeColor ? "Rosa" : "Branco")</span>
     </MudStack>
 </MudMainContent>
 

@@ -9,7 +9,7 @@
             <MudGrid Class="pa-3" Spacing="1">
                 @foreach (char item in Combination)
                 {
-                            <MudItem>
+                    <MudItem>
                         <MudButton Class="py-4 px-4" Variant="@(SpecialCharacters.Contains(item) ? Variant.Filled : Variant.Outlined)"
                                    Style="@($"color:{(ChangeColor ? Theme.PaletteLight.White : Theme.PaletteDark.Dark)}; background:{GetBackgroundColor(item)}")"
                                    OnClick="@(item == 'C' ? EventCallback.Factory.Create<MouseEventArgs>(this, ZerarVisor)
@@ -17,8 +17,8 @@
                                             : EventCallback.Factory.Create<MouseEventArgs>(this, () => AdicionarAoVisor(item)))">
                             @item
                         </MudButton>
-                            </MudItem>
-                        }
+                    </MudItem>
+                }
             </MudGrid>
         </MudPaper>
         <MudToggleIconButton @bind-Toggled="ChangeColor" Icon="@Icons.Material.Filled.Contrast" Color="@Color.Dark" ToggledColor="@Color.Primary" />

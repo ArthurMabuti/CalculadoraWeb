@@ -9,63 +9,20 @@
             <MudGrid Class="pa-3" Spacing="1">
                 @foreach (char item in Combination)
                 {
-                    @if (SpecialCharacters.Contains(item))
-                    {
-                        if (item == 'C')
-                        {
                             <MudItem>
-                                <MudButton @onclick="ZerarVisor" Class="py-4 px-4" Variant="Variant.Filled" Style="@($"color:{Theme.PaletteLight.White}; background:{Colors.Pink.Lighten1}")">@item</MudButton>
+                        <MudButton Class="py-4 px-4" Variant="@(SpecialCharacters.Contains(item) ? Variant.Filled : Variant.Outlined)"
+                                   Style="@($"color:{(ChangeColor ? Theme.PaletteLight.White : Theme.PaletteDark.Dark)}; background:{GetBackgroundColor(item)}")"
+                                   OnClick="@(item == 'C' ? EventCallback.Factory.Create<MouseEventArgs>(this, ZerarVisor)
+                                            : item == '=' ? EventCallback.Factory.Create<MouseEventArgs>(this, RetornarResultado)
+                                            : EventCallback.Factory.Create<MouseEventArgs>(this, () => AdicionarAoVisor(item)))">
+                            @item
+                        </MudButton>
                             </MudItem>
                         }
-                        else
-                        {
-                            <MudItem>
-                                <MudButton OnClick="@((e) => AdicionarAoVisor(item))" Class="py-4 px-4" Variant="Variant.Filled" Style="@($"color:{Theme.PaletteLight.White}; background:{Colors.Pink.Lighten1}")">@item</MudButton>
-                            </MudItem>
-                        }
-                    }
-                    else
-                    {
-                        <MudItem>
-                            <MudButton OnClick="@((e) => AdicionarAoVisor(item))" Class="py-4 px-4" Variant="Variant.Outlined" Style="@($"color:{Theme.PaletteDark.White}")">@item</MudButton>
-                        </MudItem>
-                    }
-                    Count++;
-                }
             </MudGrid>
         </MudPaper>
     </MudStack>
 </MudMainContent>
-
-
-@* <MudMainContent>
-    <MudContainer MaxWidth="MaxWidth.Medium">
-        <body>
-            <div id="calculator">
-                <input id="display" readonly>
-                <div id="keys">
-                    <button onclick="appendToDisplay('+')" class="operator-btn">+</button>
-                    <button onclick="appendToDisplay('7')">7</button>
-                    <button onclick="appendToDisplay('8')">8</button>
-                    <button onclick="appendToDisplay('9')">9</button>
-                    <button onclick="appendToDisplay('-')" class="operator-btn">-</button>
-                    <button onclick="appendToDisplay('4')">4</button>
-                    <button onclick="appendToDisplay('5')">5</button>
-                    <button onclick="appendToDisplay('6')">6</button>
-                    <button onclick="appendToDisplay('*')" class="operator-btn">*</button>
-                    <button onclick="appendToDisplay('1')">1</button>
-                    <button onclick="appendToDisplay('2')">2</button>
-                    <button onclick="appendToDisplay('3')">3</button>
-                    <button onclick="appendToDisplay('/')" class="operator-btn">/</button>
-                    <button onclick="appendToDisplay('0')">0</button>
-                    <button onclick="appendToDisplay('.')">.</button>
-                    <button onclick="calculate()">=</button>
-                    <button onclick="clearDisplay()" class="operator-btn">C</button>
-                </div>
-            </div>
-        </body>
-    </MudContainer>
-</MudMainContent> *@
 
 @code {
     private static MudTheme Theme = new();

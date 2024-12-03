@@ -11,8 +11,8 @@
                 {
                     <MudItem>
                         <MudButton Class="py-4 px-4" Variant="@(SpecialCharacters.Contains(item) ? Variant.Filled : Variant.Outlined)"
-                                   Style="@($"color:{(ChangeColor ? Theme.PaletteLight.White : Theme.PaletteDark.Dark)}; background:{GetBackgroundColor(item)}")"
-                                   OnClick="@(item == 'C' ? EventCallback.Factory.Create<MouseEventArgs>(this, ZerarVisor)
+                        Style="@($"color:{(ChangeColor ? Theme.PaletteLight.White : Theme.PaletteDark.Dark)}; background:{GetBackgroundColor(item)}")"
+                        OnClick="@(item == 'C' ? EventCallback.Factory.Create<MouseEventArgs>(this, ZerarVisor)
                                             : item == '=' ? EventCallback.Factory.Create<MouseEventArgs>(this, RetornarResultado)
                                             : EventCallback.Factory.Create<MouseEventArgs>(this, () => AdicionarAoVisor(item)))">
                             @item
@@ -42,8 +42,8 @@
     {
         if (char.IsDigit(item) || item == ',')
         {
-        Visor += item;
-    }
+            Visor += item;
+        }
         else if (SpecialCharacters.Contains(item))
         {
             if (Visor is null && item == '-') Visor += item;

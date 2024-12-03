@@ -57,13 +57,31 @@
 
     private void ZerarVisor()
     {
-        Visor = string.Empty;
+        Visor = null;
     }
 
     private void RetornarResultado()
     {
-        Visor = Calculator.Evaluate(Visor!).ToString();
+        string valorDoVisor = Visor;
+        try
+        {
+            Visor = Calculator.Calculate(Visor).ToString();
+        }
+        catch (Exception ex)  
+        {
+            Visor = "Erro na expressão";  // Exibe erro para o usuário
+            Console.WriteLine($"Erro ao calcular: {ex.Message}");  // Loga o erro no console ou arquivo de log
+        }
+        finally
+        {
+            // Se o valor do visor não foi alterado (ou foi um erro), mantém o visor com a mensagem de erro
+            if (valorDoVisor == Visor && Visor != "Erro na expressão")
+            {
+                Visor = null;  // Caso contrário, limpa o visor
+            }
+        }
     }
+
 
     private string GetBackgroundColor(char item)
     {

@@ -4,46 +4,53 @@ using System.Collections.Generic;
 
 public class Calculator
 {
-    public double Evaluate(string expression)
+    public double Calculate(string expression)
     {
-        var tokens = Tokenize(expression);
+        var tokens = TokenSeparation(expression);
         var rpn = ConvertToRPN(tokens);
         return CalculateRPN(rpn);
     }
 
-    private List<string> Tokenize(string expression)
+    private List<string> TokenSeparation(string expression)
     {
-        var tokens = new List<string>();
+        List<string> tokens = [];
         string number = string.Empty;
+        int count = 0;
 
         foreach (char ch in expression)
         {
-            if (char.IsDigit(ch) || ch == '.')
+            //Se for um valor numérico ou ponto, acumula em "number"
+            if (char.IsDigit(ch) || ch == ',' || ch == '-' && count == 0)
             {
-                number += ch; // Acumula o número
+                number += ch;
             }
-            else if ("+-*/".Contains(ch))
+            else if ("+-*/".Contains(ch) && count != 0)
             {
+                // Adiciona o valor númerico completo como token
                 if (!string.IsNullOrEmpty(number))
                 {
                     tokens.Add(number);
                     number = string.Empty;
                 }
-                tokens.Add(ch.ToString()); // Adiciona operador
+                // Adiciona o operador
+                tokens.Add(ch.ToString()); 
             }
+            count++;
         }
 
+        // Após fim do laço foreach, se ainda sobrar algum número, adicionar aos tokens
         if (!string.IsNullOrEmpty(number))
             tokens.Add(number);
 
         return tokens;
     }
 
+    // RPN = Reverse Polish Notation (algoritmo de Shunting Yard de Dijkstra)
     private List<string> ConvertToRPN(List<string> tokens)
     {
-        var output = new List<string>();
-        var operators = new Stack<string>();
-        var precedence = new Dictionary<string, int> { { "+", 1 }, { "-", 1 }, { "*", 2 }, { "/", 2 } };
+        List<string> output = [];
+        Stack<string> operators = [];
+        Dictionary<string, int> priority = new() { { "+", 1 }, { "-", 1 }, { "*", 2 }, { "/", 2 } }; // Define qual operação será realizada primeiro
 
         foreach (var token in tokens)
         {
@@ -53,17 +60,17 @@ public class Calculator
             }
             else
             {
-                while (operators.Count > 0 && precedence[operators.Peek()] >= precedence[token])
+                while (operators.Count > 0 && priority[operators.Peek()] >= priority[token])
                 {
-                    output.Add(operators.Pop());
+                    output.Add(operators.Pop()); // Remove operador do topo da pilha e adiciona a saída
                 }
-                operators.Push(token);
+                operators.Push(token); // Adiciona operador ao topo da pilha
             }
         }
 
         while (operators.Count > 0)
         {
-            output.Add(operators.Pop());
+            output.Add(operators.Pop()); // Adiciona o restante dos operadores à saída
         }
 
         return output;
@@ -71,7 +78,7 @@ public class Calculator
 
     private double CalculateRPN(List<string> rpn)
     {
-        var stack = new Stack<double>();
+        Stack<double> stack = new();
 
         foreach (var token in rpn)
         {
@@ -84,7 +91,7 @@ public class Calculator
                 var b = stack.Pop();
                 var a = stack.Pop();
 
-                stack.Push(token switch
+                stack.Push(token switch // Devolve resultado ao topo da pilha
                 {
                     "+" => a + b,
                     "-" => a - b,

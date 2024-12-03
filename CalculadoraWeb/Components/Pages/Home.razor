@@ -40,7 +40,19 @@
 
     private void AdicionarAoVisor(char item)
     {
+        if (char.IsDigit(item) || item == ',')
+        {
         Visor += item;
+    }
+        else if (SpecialCharacters.Contains(item))
+        {
+            if (Visor is null && item == '-') Visor += item;
+            if(Visor is not null)
+            {
+                if (char.IsDigit(Visor[^1])) Visor += item;
+                else if (!Visor!.EndsWith(item)) Visor = Visor.Substring(0, Visor.Length - 1) + item;
+            }
+        }
     }
 
     private void ZerarVisor()
